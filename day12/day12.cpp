@@ -19,7 +19,7 @@ public:
         m_visited = vector<vector<bool>>(M, vector<bool>(N, false));
     }
 
-    UINT64 part1() {
+    UINT64 part2() {
         UINT64 totalPrice = 0;
 
         for (int row = 0; row < M; row++) {
@@ -54,15 +54,37 @@ public:
     }
 
     bool shouldAddToPerimeter(int row, int col, ii direction) {
-        /* If the direction is left or right, we don't add if the above element
-         * has a fence in the same direction. */
+        /*
+         * If the direction is left or right, meaning that we want to add a
+         * fence to the left or to the right side of the square, we don't add to
+         * the perimeter if the above square has the same letter AND has a fence
+         * in the same side. For example:
+         * | A  or A |
+         * | A     A |
+         *
+         * Here if we are at the bottom A, we check if the above A has a fence
+         * and if it does, the bottom A's fence does not add anything to the
+         * perimeter.
+         *
+         */
         if (direction == ii(0, 1) || direction == ii(0, -1)) {
             return row == 0 || m_grid[row - 1][col] != m_grid[row][col] ||
                    !hasFenceInDirection(row - 1, col, direction);
         }
 
-        /* Direction is up or down, if the left element has fence we don't add
-         * to the perimeter. */
+        /*
+         * Same logic for when we want to add a fence on the upper side or
+         * bottom side: We check if the square to the left is the same character
+         * and also has a fence.
+         * For example:
+         * --
+         * AA or AA
+         *       --
+         *
+         * If we are at the second A, we check if the left square is an A and
+         * has a fence, if it does then this fence does not add to the
+         * perimeter.
+         */
         assert(direction == ii(1, 0) || direction == ii(-1, 0));
 
         return col == 0 || m_grid[row][col] != m_grid[row][col - 1] ||
@@ -119,7 +141,7 @@ int main() {
     Garden garden;
     garden.initFromLines(rLines);
 
-    cout << garden.part1() << endl;
+    cout << garden.part2() << endl;
 
     return 0;
 }
