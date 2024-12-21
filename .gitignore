@@ -1,2 +1,4 @@
 **/input.txt
-**/out
+**/out*
+.DS_Store
+.clang-format
