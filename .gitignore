@@ -1,4 +1,5 @@
 **/input.txt
 **/out*
+**/*ref*
 .DS_Store
 .clang-format
